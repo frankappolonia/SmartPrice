@@ -3,7 +3,7 @@ import tkinter as tk
 from tkinter.constants import ANCHOR, CENTER
 import CustomerBuilder
 
-
+add = "this is a github test"
 #root = tk.Tk()
 #frame = tk.Frame(root)
 
