@@ -6,6 +6,7 @@ import dbFunctions
 3. Creating and inserting updated customer info into the customer table.
 4. Deleting customers from the customer table.'''
 
+database = "C:\\Users\\appolofr\\Documents\\Github\\SmartPrice\\test.db"
 
 '''----------- 1. USER INPUTS --------------------'''
 
@@ -74,14 +75,14 @@ def createCustomer(customerInfo):
 
     Uses the commit_customer function.'''
 
-    database = "C:\\Users\\appolofr\\Documents\\vscode\\Air Brake\\test.db"
+    #database = "C:\\Users\\appolofr\\Documents\\Github\\SmartPrice\\test.db"
     connection = dbFunctions.create_connection(database)
 
     with connection:
         # customerInfo is AWLAYS [accountNum, accountName, listPriceMod]
         customerParam = (customerInfo[0], customerInfo[1], customerInfo[0], customerInfo[2])
         #                 (ID,               name,         customerNumber,   listPriceMod)
-        customerID = commit_createCustomer(connection, customerParam)
+        commit_createCustomer(connection, customerParam)
 
 def commit_createCustomer(conn, customerParam):
     '''Commits new customer (row) into the customer table. Takes a DB connection
@@ -105,7 +106,7 @@ def updateCustomer(updatedSpecsList):
      
      Uses commit_updateCustomer function.'''
 
-    database = "C:\\Users\\appolofr\\Documents\\vscode\\Air Brake\\test.db"
+    #database = "C:\\Users\\appolofr\\Documents\\Github\\SmartPrice\\test.db"
     connection = dbFunctions.create_connection(database)
 
     with connection:
@@ -135,7 +136,7 @@ def deleteCustomer(customerID):
         
         Uses the commit_deleteCustomer function.'''
 
-    database = "C:\\Users\\appolofr\\Documents\\vscode\\Air Brake\\test.db"
+    #database = "C:\\Users\\appolofr\\Documents\\Github\\SmartPrice\\test.db"
     connection = dbFunctions.create_connection(database)
 
     with connection:

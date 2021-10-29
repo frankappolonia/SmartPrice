@@ -2,6 +2,7 @@
 import tkinter as tk
 from tkinter.constants import ANCHOR, CENTER
 import AdminPage, AdminPasswrdPage, PricingPage
+import CustomerBuilder
 
 '''This file contains the class for the main GUI. This is where the main TK frame is built
 and all other sub-pages are imported to. The main frame essentially is like a shell.
@@ -23,7 +24,7 @@ class BaseFrame(tk.Tk):
         container.grid_columnconfigure(0, weight=10)
 
         self.frames = {}
-        for F in (StartPage, AdminPage):
+        for F in (StartPage, AdminPage.AdminPageGui):
             frame = F(container, self)
             self.frames[F] = frame
             frame.grid(row=0, column=0, sticky="nsew")
@@ -47,7 +48,7 @@ class StartPage(tk.Frame):
         welcomeLabel = tk.Label(self, text="Welcome to ABE SmartPrice!", font=LARGE_FONT, pady=50)
         welcomeLabel.grid(row=0, column=0, sticky="nsew")
 
-        adminPage = tk.Button(self, text = "Admin (Add, Update, Delete Customer)", command = lambda: controller.show_frame(AdminPage))
+        adminPage = tk.Button(self, text = "Admin (Add, Update, Delete Customer)", command = lambda: controller.show_frame(AdminPage.AdminPageGui))
         adminPage.grid(row=1, column=0, sticky = "nswe", pady=15)
 
         pricingPage = tk.Button(self, text = "Get Parts Pricing")

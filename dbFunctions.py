@@ -6,6 +6,8 @@ from sqlite3 import Error
 2. Function to create table
 3. Functions to select data from a table'''
 
+database = "C:\\Users\\appolofr\\Documents\\Github\\SmartPrice\\test.db"
+
 '''---------- 1. Connection to DB-----------------'''
 
 def create_connection(path):
@@ -38,7 +40,7 @@ def create_table(conn, create_table_sql):
 
 def insertTable():
     '''Function to insert a newly created table to a DB.'''
-    database = "C:\\Users\\appolofr\\Documents\\vscode\\Air Brake\\test.db"
+    #database = "C:\\Users\\appolofr\\Documents\\vscode\\Air Brake\\test.db"
 
     #this is where the customer table is created
     sql_create_customer_table = """CREATE TABLE IF NOT EXISTS (
@@ -66,7 +68,7 @@ def select_listPriceMod(id):
     '''Takes a customer id as argument. Returns the customer's listPriceMod from
     the customer table.'''
 
-    database = "C:\\Users\\appolofr\\Documents\\vscode\\Air Brake\\test.db"
+    #database = "C:\\Users\\appolofr\\Documents\\vscode\\Air Brake\\test.db"
     conn = create_connection(database)
 
     cursor = conn.cursor()
@@ -83,7 +85,7 @@ def select_AllCustomerInfo(id):
     '''Takes a customer id as argument. Returns all the customer information
     (name, account number, listPriceMod.)'''
 
-    database = "C:\\Users\\appolofr\\Documents\\vscode\\Air Brake\\test.db"
+    #database = "C:\\Users\\appolofr\\Documents\\vscode\\Air Brake\\test.db"
     conn = create_connection(database)
 
     cursor = conn.cursor()

@@ -2,7 +2,7 @@ import tkinter as tk
 import CustomerBuilder
 
 LARGE_FONT= ("Verdana", 12)
-class AdminPage(tk.Frame):
+class AdminPageGui(tk.Frame):
 
     ''' Class that builds the admin page. Here, the user can add, update or delete
     customers from the customer DB table. Need admin privilidge (username and password)
@@ -45,6 +45,8 @@ class AdminPage(tk.Frame):
             self.delete_customerNumber.delete(0, tk.END)
 
         '''2. Add customer'''
+        self.insertCustomer
+
         addCustomerTitle = tk.Label(self, text="Add Customer", font=LARGE_FONT)
         addCustomerTitle.grid(row=0, column=1, pady=10)
 
@@ -62,20 +64,13 @@ class AdminPage(tk.Frame):
         self.enter_ListPriceMod.grid(row = 3, column=1, pady=5, sticky=tk.W)
         label_ListPriceMod = tk.Label(self, text="List Price Mod ")
         label_ListPriceMod.grid(row = 3, column=0, pady=2, sticky=tk.E)
-        
 
-        def insertCustomer():
-            customerValues = [self.enter_customerNumber.get(), self.enter_customerName.get(), self.enter_ListPriceMod.get()]
-            CustomerBuilder.createCustomer(customerValues)
-
-                #clears the values entered
-        
-
-        submitCustomer = tk.Button(self, text = "Add customer to DB", command = lambda:[insertCustomer(), updateStatusText("customer {0} ({1}) added to DB.".format(self.enter_customerNumber.get(), self.enter_customerName.get())), clearEntry()])
+        submitCustomer = tk.Button(self, text = "Add customer to DB", command = lambda:[self.insertCustomer(), updateStatusText("customer {0} ({1}) added to DB.".format(self.enter_customerNumber.get(), self.enter_customerName.get())), clearEntry()])
         submitCustomer.grid(row=4, column=0, columnspan=3, pady=2)
 
-
         '''3. Update Customer'''
+        self.updateCustomer
+
         updateCustomerTitle = tk.Label(self, text="Update Customer", font=LARGE_FONT)
         updateCustomerTitle.grid(row=5, column=1, pady=10)
 
@@ -94,23 +89,12 @@ class AdminPage(tk.Frame):
         label_updateListPriceMod = tk.Label(self, text="List Price Mod ")
         label_updateListPriceMod.grid(row = 8, column=0, pady=2, sticky=tk.E)
 
-        def updateCustomer():
-            '''Takes the values entered in the GUI and passes them to the update DB function.
-            Precondition: Takes customer number (int), customer name (str), and list price mod (float) as
-             input -> goes to customerValues.'''
-
-            customerValues = [self.update_customerNumber.get(), self.update_customerName.get(), self.update_ListPriceMod.get()]
-            CustomerBuilder.updateCustomer(customerValues)
-
-                #clears the values entered in gui
-            self.update_customerName.delete(0, tk.END)
-            self.update_customerNumber.delete(0, tk.END)
-            self.update_ListPriceMod.delete(0, tk.END)
-        submitUpdateCustomer = tk.Button(self, text = "Update customer", command = lambda:[updateCustomer(), updateStatusText("customer {0} updated.".format(self.update_customerNumber.get())), clearEntry()])
+        submitUpdateCustomer = tk.Button(self, text = "Update customer", command = lambda:[self.updateCustomer(), updateStatusText("customer {0} updated.".format(self.update_customerNumber.get())), clearEntry()])
         submitUpdateCustomer.grid(row=9, column=0, columnspan=3, pady=2)
-       
 
         '''4. Delete Customer'''
+        self.delCustomer
+
         deleteCustomerTitle = tk.Label(self, text="Delete Customer", font=LARGE_FONT)
         deleteCustomerTitle.grid(row=10, column=1, pady=10)
 
@@ -119,14 +103,38 @@ class AdminPage(tk.Frame):
         label_deleteCustomerNumber = tk.Label(self, text="Customer Number ")
         label_deleteCustomerNumber.grid(row = 11, column=0, pady=2, sticky=tk.E)
 
-        def delCustomer():
-            '''Takes the customer number entered in the GUI and passes it to delete DB function.
-            Precondition: Takes customer number (int) as input.'''
-
-            customerValues = self.delete_customerNumber.get()
-            CustomerBuilder.deleteCustomer(customerValues)
-
-                #clears the values entered in gui
-            self.delete_customerNumber.delete(0, tk.END)
-        submitDeleteCustomer = tk.Button(self, text = "Delete customer", command = lambda: [delCustomer(), updateStatusText("customer {0} deleted".format(self.delete_customerNumber.get())), clearEntry()])
+        submitDeleteCustomer = tk.Button(self, text = "Delete customer", command = lambda: [self.delCustomer(), updateStatusText("customer {0} deleted".format(self.delete_customerNumber.get())), clearEntry()])
         submitDeleteCustomer.grid(row=12, column=0, columnspan=3, pady=2)
+
+    def insertCustomer(self):
+        '''Takes the values entered in the GUI and passes them to the createCustomer function from
+        the customerBuilder module. createCustomer inserts a new customer into the table.
+            Precondition: Takes customer number (int), customer name (str), and list price mod (float) as
+             input -> goes to customerValues.
+             
+             Called with tk button'''
+
+        customerValues = [self.enter_customerNumber.get(), self.enter_customerName.get(), self.enter_ListPriceMod.get()]
+        CustomerBuilder.createCustomer(customerValues)
+
+        
+    def updateCustomer(self):
+        '''Takes the values entered in the GUI and passes them to the updateCustomer function from
+        the CustomerBuilder module. updateCustomer updates the values of an existing customer in the table.
+            Precondition: Takes customer number (int), customer name (str), and list price mod (float) as
+             input -> goes to customerValues.
+             
+             Called with tk button'''
+
+        customerValues = [self.update_customerNumber.get(), self.update_customerName.get(), self.update_ListPriceMod.get()]
+        CustomerBuilder.updateCustomer(customerValues)
+
+    def delCustomer(self):
+        '''Takes the customer number entered in the GUI and passes it to deleteCustomer funtion from the 
+        customerBuilder module. deleteCustomer removes an entire row from the table.
+            Precondition: Takes customer number (int) as input.
+            
+            Called with tk button'''
+
+        customerValues = self.delete_customerNumber.get()
+        CustomerBuilder.deleteCustomer(customerValues)
