@@ -1,5 +1,8 @@
 import tkinter as tk
+from tkinter.constants import NW
 import CustomerBuilder
+ 
+#from mainGUI import StartPage
 
 LARGE_FONT= ("Verdana", 12)
 class AdminPageGui(tk.Frame):
@@ -24,6 +27,7 @@ class AdminPageGui(tk.Frame):
         self.T = tk.Text(self, height = 2, width=5)
         self.T.grid(row = 13, column = 0, columnspan=3, sticky="nsew")
         self.T.insert(tk.END, "Status:")
+
 
         def updateStatusText(status):
             '''This function updates the status text bar. The status text tells the user
