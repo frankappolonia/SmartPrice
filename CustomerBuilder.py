@@ -1,3 +1,4 @@
+from sqlite3.dbapi2 import Error, IntegrityError
 import dbFunctions
 
 '''Module that has different functions for the customer table:
