@@ -1,24 +1,23 @@
 import tkinter as tk
-from tkinter.constants import NW
+from tkinter import ttk
 import CustomerBuilder
  
-#from mainGUI import StartPage
-
 LARGE_FONT= ("Verdana", 12)
 class AdminPageGui(tk.Frame):
 
     ''' Class that builds the admin page. Here, the user can add, update or delete
     customers from the customer DB table. Need admin privilidge (username and password)
     to access this page.
-    1. Basic functions and setup utilized in 2-4
+    1. Basic setup
     2. Add Customer
     3. Update Customer
-    4. Delete Customer '''
+    4. Delete Customer
+    5. CLass methods '''
 
     def __init__(self, parent, controller):
         tk.Frame.__init__(self,parent)
         
-        '''0. Basic setup'''
+        '''1. Basic setup'''
 
         tk.Widget.configure(self, background='white')
 
@@ -40,22 +39,22 @@ class AdminPageGui(tk.Frame):
         addCustomerTitle = tk.Label(self, text="Add Customer", font=LARGE_FONT, bg='white')
         addCustomerTitle.grid(row=0, column=1, pady=10)
 
-        self.enter_customerNumber = tk.Entry(self, width =20) 
+        self.enter_customerNumber = ttk.Entry(self, width =20) 
         self.enter_customerNumber.grid(row = 1, column=1, pady=5,sticky=tk.W)
         label_customerNumber = tk.Label(self, text="Customer Number ", bg='white')
         label_customerNumber.grid(row = 1, column=0, pady=2, sticky=tk.E)
 
-        self.enter_customerName = tk.Entry(self, width =20)
+        self.enter_customerName = ttk.Entry(self, width =20)
         self.enter_customerName.grid(row = 2, column=1, pady=5, sticky=tk.W)
         label_customerName = tk.Label(self, text="Customer Name ", bg='white')
         label_customerName.grid(row = 2, column=0, pady=2, sticky=tk.E)
 
-        self.enter_ListPriceMod = tk.Entry(self, width =20)
+        self.enter_ListPriceMod = ttk.Entry(self, width =20)
         self.enter_ListPriceMod.grid(row = 3, column=1, pady=5, sticky=tk.W)
         label_ListPriceMod = tk.Label(self, text="List Price Mod ", bg='white')
         label_ListPriceMod.grid(row = 3, column=0, pady=2, sticky=tk.E)
 
-        submitCustomer = tk.Button(self, text = "Add customer to DB", command = lambda: self.insertCustomer()) 
+        submitCustomer = ttk.Button(self, text = "Add customer to DB", command = lambda: self.insertCustomer()) 
         submitCustomer.grid(row=4, column=0, columnspan=3, pady=2)
 
         '''3. Update Customer'''
@@ -64,22 +63,22 @@ class AdminPageGui(tk.Frame):
         updateCustomerTitle = tk.Label(self, text="Update Customer", font=LARGE_FONT, bg='white')
         updateCustomerTitle.grid(row=5, column=1, pady=10)
 
-        self.update_customerNumber = tk.Entry(self, width =20) 
+        self.update_customerNumber = ttk.Entry(self, width =20) 
         self.update_customerNumber.grid(row = 6, column=1, pady=5,sticky=tk.W)
         label_updateCustomerNumber = tk.Label(self, text="Customer Number ", bg='white')
         label_updateCustomerNumber.grid(row = 6, column=0, pady=2, sticky=tk.E)
 
-        self.update_customerName = tk.Entry(self, width =20)
+        self.update_customerName = ttk.Entry(self, width =20)
         self.update_customerName.grid(row = 7, column=1, pady=5, sticky=tk.W)
         label_updateCustomerName = tk.Label(self, text="Customer Name ", bg='white')
         label_updateCustomerName.grid(row = 7, column=0, pady=2, sticky=tk.E)
 
-        self.update_ListPriceMod = tk.Entry(self, width =20)
+        self.update_ListPriceMod = ttk.Entry(self, width =20)
         self.update_ListPriceMod.grid(row = 8, column=1, pady=5, sticky=tk.W)
         label_updateListPriceMod = tk.Label(self, text="List Price Mod", bg='white')
         label_updateListPriceMod.grid(row = 8, column=0, pady=2, sticky=tk.E)
 
-        submitUpdateCustomer = tk.Button(self, text = "Update customer", command = lambda: self.updateCustomer())
+        submitUpdateCustomer = ttk.Button(self, text = "Update customer", command = lambda: self.updateCustomer())
         submitUpdateCustomer.grid(row=9, column=0, columnspan=3, pady=2)
 
         '''4. Delete Customer'''
@@ -88,16 +87,16 @@ class AdminPageGui(tk.Frame):
         deleteCustomerTitle = tk.Label(self, text="Delete Customer", font=LARGE_FONT, bg='white')
         deleteCustomerTitle.grid(row=10, column=1, pady=10)
 
-        self.delete_customerNumber = tk.Entry(self, width =20) 
+        self.delete_customerNumber = ttk.Entry(self, width =20) 
         self.delete_customerNumber.grid(row = 11, column=1, pady=5,sticky=tk.W)
         label_deleteCustomerNumber = tk.Label(self, text="Customer Number ", bg='white')
         label_deleteCustomerNumber.grid(row = 11, column=0, pady=2, sticky=tk.E)
 
-        submitDeleteCustomer = tk.Button(self, text = "Delete customer", command = lambda: self.delCustomer())
+        submitDeleteCustomer = ttk.Button(self, text = "Delete customer", command = lambda: self.delCustomer())
         submitDeleteCustomer.grid(row=12, column=0, columnspan=3, pady=2)
 
 
-    ''' CLASS FUNCTIONS '''
+    ''' 5. CLASS Methods '''
     def clearEntry(self):
         '''Function that clears the user entered data from the form
             whenever an entry button is clicked.'''
