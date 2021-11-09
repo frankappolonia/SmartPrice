@@ -1,15 +1,29 @@
 import tkinter as tk
+from tkinter import ttk
+from dbFunctions import select_AllCustomerInfo
 
 
 LARGE_FONT= ("Verdana", 12)
 
 class PricingPageGUI(tk.Frame):
+
+    ''' Class that builds the pricing page. Here, the user can select various price
+    modifying options to calculate the price of a part. The user can also display customer
+    information and pricing levels.
+    1. Basic setup
+    2. Entry price mods
+    3. Check button price mods
+    4. Display customer info
+    5. CLass methods '''
+
     def __init__(self, parent, controller):
         tk.Frame.__init__(self,parent)
 
         '''1. Basic setup'''
         #this provides formatting for a 3 column grid
-        blanklabel = tk.Label(self, text="", padx=50)
+        tk.Widget.configure(self, background='white')
+
+        blanklabel = tk.Label(self, text="", padx=50, bg='white')
         blanklabel.grid(row =0, column =2)
 
         #Status text widgit
@@ -17,64 +31,107 @@ class PricingPageGUI(tk.Frame):
         self.T.grid(row = 13, column = 0, columnspan=3, sticky="nsew")
         self.T.insert(tk.END, "Price Breakdown:")
 
-
-        def updateStatusText(status):
-            '''This function updates the status text bar. The status text tells the user
-            if their enter/update/or delete customer action was successful or not. This function
-            is called with every button command in this class.'''
-
-            self.T.delete(1.0, tk.END) #clears textbox before adding new message
-            self.T.insert(tk.END, " Status: " + status)
-
-        def clearEntry():
-            '''Function that clears the user entered data from the form
-            whenever calculate price button is clicked.'''
-            self.enter_customerNumber.delete(0, tk.END)
-            self.enter_timeSpent.delete(0, tk.END)
-            self.enter_shippingCost.delete(0, tk.END)
-            self.enter_listPrice.delete(0, tk.END)
-            self.enter_compPrice.delete(0, tk.END)
-
-        addCustomerTitle = tk.Label(self, text="Get Pricing", font=LARGE_FONT)
+        addCustomerTitle = tk.Label(self, text="Get Pricing", font=LARGE_FONT, bg='white')
         addCustomerTitle.grid(row=0, column=1, pady=10)
 
+        #methods
+        self.clearEntry
+        self.updatePriceBreakdownText
+        self.updatePriceLevelsText
+        self.getPriceLevels
+
         '''2. Entered Pricing modifiers'''
-        self.enter_customerNumber = tk.Entry(self, width =20) 
+        self.enter_customerNumber = ttk.Entry(self, width =20) 
         self.enter_customerNumber.grid(row = 1, column=1, pady=5,sticky=tk.W)
-        label_customerNumber = tk.Label(self, text="Customer Number ")
+        label_customerNumber = tk.Label(self, text="Customer Number ", bg='white')
         label_customerNumber.grid(row = 1, column=0, pady=2, sticky=tk.E)
 
-        self.enter_timeSpent = tk.Entry(self, width =20)
+        self.enter_timeSpent = ttk.Entry(self, width =20)
         self.enter_timeSpent.grid(row = 2, column=1, pady=5, sticky=tk.W)
-        label_timeSpent = tk.Label(self, text="Time Spent (Days) ")
+        label_timeSpent = tk.Label(self, text="Time Spent (Days) ", bg='white')
         label_timeSpent.grid(row = 2, column=0, pady=2, sticky=tk.E)
 
-        self.enter_shippingCost= tk.Entry(self, width =20)
+        self.enter_shippingCost= ttk.Entry(self, width =20)
         self.enter_shippingCost.grid(row = 3, column=1, pady=5, sticky=tk.W)
-        label_shippingCost = tk.Label(self, text="Shipping costs ")
+        label_shippingCost = tk.Label(self, text="Shipping costs ", bg='white')
         label_shippingCost.grid(row = 3, column=0, pady=2, sticky=tk.E)
 
-        self.enter_listPrice = tk.Entry(self, width =20) 
+        self.enter_listPrice = ttk.Entry(self, width =20) 
         self.enter_listPrice.grid(row = 6, column=1, pady=5,sticky=tk.W)
-        label_listPrice = tk.Label(self, text="List Price ")
+        label_listPrice = tk.Label(self, text="List Price ", bg='white')
         label_listPrice.grid(row = 6, column=0, pady=2, sticky=tk.E)
 
-        self.enter_compPrice = tk.Entry(self, width =20)
+        self.enter_compPrice = ttk.Entry(self, width =20)
         self.enter_compPrice.grid(row = 7, column=1, pady=5, sticky=tk.W)
-        label_compPrice = tk.Label(self, text="Competitor Price ")
+        label_compPrice = tk.Label(self, text="Competitor Price ", bg='white')
         label_compPrice.grid(row = 7, column=0, pady=2, sticky=tk.E)
 
         ''' 3. Check buttons pricing modifiers'''
-        self.update_ListPriceMod = tk.Checkbutton(self, width =15, text="Expidited Delivery",)
+        self.update_ListPriceMod = ttk.Checkbutton(self, width =17, text="Expidited Delivery")
         self.update_ListPriceMod.grid(row = 8, column=1, pady=5, sticky=tk.W)
 
-        self.check_hotItem = tk.Checkbutton(self, width = 15, text="Hot Item")
+        self.check_hotItem = ttk.Checkbutton(self, width = 15, text="Hot Item")
         self.check_hotItem.grid(row = 8, column=0, pady=5, sticky= tk.W )
 
-        self.check_truckDown = tk.Checkbutton(self, width = 15, text="Truck Down")
+        self.check_truckDown = ttk.Checkbutton(self, width = 15, text="Truck Down")
         self.check_truckDown.grid(row = 8, column=2, pady=5, sticky= tk.W )
 
-
-
-        submitUpdateCustomer = tk.Button(self, text = "Calculate Pricing", command = lambda:[ updateStatusText("customer {0} updated.".format(self.update_customerNumber.get())), clearEntry()])
+        submitUpdateCustomer = ttk.Button(self, text = "Calculate Pricing", command = lambda:[self.updateStatusText("customer {0} updated.".format(self.update_customerNumber.get())), self.clearEntry()])
         submitUpdateCustomer.grid(row=9, column=0, columnspan=3, pady=2)
+
+        ''' 4. Display customer info '''
+        displayCustomerTitle = tk.Label(self, text="Display Customer Levels", font=LARGE_FONT, bg='white')
+        displayCustomerTitle.grid(row=0, column=3, columnspan=4, pady=10, padx=10)
+
+        self.enter_customerNumber2 = ttk.Entry(self, width=20)
+        self.enter_customerNumber2.grid(row=1, column =4, pady=5, padx=20, sticky="ne")
+        label_customerNumber2 = tk.Label(self, text="Customer Number", bg="white")
+        label_customerNumber2.grid(row=1, column=3, pady=2, sticky= "ne")
+
+        displayInfo = ttk.Button(self, text = "Display Levels", command = lambda:[self.getPriceLevels(), self.clearEntry()])
+        displayInfo.grid(row=2, column=3, columnspan=3, pady=2)
+
+        self.customerT = tk.Text(self, height = 4, width=3)
+        self.customerT.grid(row = 3, column = 3, columnspan=3, sticky="nsew")
+
+        self.sep = ttk.Separator(self, orient="vertical")
+        self.sep.grid(row=0, column=3)
+
+
+
+    ''' 5. Class methods'''
+    
+    def updatePriceBreakdownText(self, status):
+            '''This function updates the price breakdown text box. The status text tells the user
+            if their enter/update/or delete customer action was successful or not, and the pricing
+            breakdown of the information they entered.'''
+        
+            self.T.delete(1.0, tk.END) #clears textbox before adding new message
+            self.T.insert(tk.END, " Status: " + status)
+
+    def updatePriceLevelsText(self, status):
+            '''This function updates the price levels text box. The status text tells the user
+            if their enter/update/or delete customer action was successful or not, and the pricing
+            breakdown of the information they entered.'''
+        
+            self.customerT.delete(1.0, tk.END) #clears textbox before adding new message
+            self.customerT.insert(tk.END, status + "\n")
+    
+    def getPriceLevels(self):
+        ''' This function gets the pricing levels and customer information from the DB table. 
+        It then displays it in the customerT text widget.'''
+
+        customerNum = self.enter_customerNumber2.get()
+        info = select_AllCustomerInfo(customerNum)
+        list(info)
+
+        self.updatePriceLevelsText("Customer: {0} \n Name: {1} \n List price mod: {2} ".format(customerNum, info[0], info[2]))
+
+    def clearEntry(self):
+        '''Function that clears the user entered data from the form
+            whenever calculate price button is clicked.'''
+        self.enter_customerNumber.delete(0, tk.END)
+        self.enter_timeSpent.delete(0, tk.END)
+        self.enter_shippingCost.delete(0, tk.END)
+        self.enter_listPrice.delete(0, tk.END)
+        self.enter_compPrice.delete(0, tk.END)
