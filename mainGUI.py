@@ -1,6 +1,6 @@
 #from tkinter import *
 import tkinter as tk
-from tkinter.constants import ANCHOR, CENTER, NSEW
+from tkinter import ttk 
 import AdminPage, AdminPasswrdPage, PricingPage
 #from PIL import Image, ImageTk
 
@@ -31,7 +31,7 @@ class BaseFrame(tk.Tk):
             self.frames[F] = frame
             frame.grid(row=1, column=2, sticky="nsew")
        
-        backButton = tk.Button(container, text="Back", command = lambda: self.show_frame(StartPage))
+        backButton = ttk.Button(container, width=5, text="Back", command = lambda: self.show_frame(StartPage))
         backButton.grid(row=0, column=1, sticky = "w")
 
         self.show_frame(StartPage)
@@ -55,6 +55,10 @@ class StartPage(tk.Frame):
         self.panel = tk.Label(self, image=self.img)
         self.panel.grid(row=1, column=0, columnspan=3, sticky="nsew")
 
+        self.style = ttk.Style()
+        self.style.theme_use('xpnative')
+        self.style.configure('TButton', background='blue',foreground = 'black', borderwidth=1, focusthickness=3)
+
         #self.buttonImg = tk.PhotoImage(file="roundedButton_15x10.png")
 
         path = "C:\\Users\\appolofr\\Documents\GitHub\SmartPrice\\roundedButton.png"
@@ -67,10 +71,10 @@ class StartPage(tk.Frame):
         welcomeLabel = tk.Label(self, text="Welcome to ABE SmartPrice!", font=LARGE_FONT, pady=50, bg='white')
         welcomeLabel.grid(row=2, column=0, columnspan=4, sticky="nsew")
 
-        adminPage = tk.Button(self,  text = "Admin (Add, Update, Delete Customer)", command = lambda: controller.show_frame(AdminPage.AdminPageGui))
+        adminPage = ttk.Button(self,  text = "Admin (Add, Update, Delete Customer)", command = lambda: controller.show_frame(AdminPage.AdminPageGui))
         adminPage.grid(row=3, column=0, columnspan=4, sticky = "nswe", pady=15)
 
-        pricingPage = tk.Button(self, text = "Get Parts Pricing", command = lambda: controller.show_frame(PricingPage.PricingPageGUI))
+        pricingPage = ttk.Button(self, text = "Get Parts Pricing", command = lambda: controller.show_frame(PricingPage.PricingPageGUI))
         pricingPage.grid(row=4, column=0, columnspan=4, sticky="nsew", pady=15)
 
 
