@@ -96,7 +96,7 @@ def select_AllCustomerInfo(id):
         item = cursor.fetchone()[1:]
         return item
     except TypeError:
-        print("Not a valid account number!")
+        return "Not a valid account number!"
 
 '''def run_select_data(id):
 
