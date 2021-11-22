@@ -27,9 +27,9 @@ class PricingPageGUI(tk.Frame):
         blanklabel.grid(row =0, column =2)
 
         #Status text widgit
-        self.T = tk.Text(self, height = 10, width=3)
-        self.T.grid(row = 13, column = 0, columnspan=3, sticky="nsew")
-        self.T.insert(tk.END, "Price Breakdown:")
+        self.priceTxt = tk.Text(self, height = 10, width=37)
+        self.priceTxt.grid(row = 13, column = 0, columnspan=3, sticky="nsw")
+        self.priceTxt.insert(tk.END, "Price Breakdown:")
 
         addCustomerTitle = tk.Label(self, text="Get Pricing", font=LARGE_FONT, bg='white')
         addCustomerTitle.grid(row=0, column=1, pady=10)
@@ -39,6 +39,12 @@ class PricingPageGUI(tk.Frame):
         self.updatePriceBreakdownText
         self.updatePriceLevelsText
         self.getPriceLevels
+
+        #seperators
+        verticalSep = ttk.Separator(self, orient='vertical')
+        verticalSep.grid(row=0, column=3, rowspan=15, sticky='nsw')
+        horizontalSep = ttk.Separator(self, orient='horizontal')
+        horizontalSep.grid(row=0, column=0, columnspan=7, sticky='new')
 
         '''2. Entered Pricing modifiers'''
         self.enter_customerNumber = ttk.Entry(self, width =20) 
@@ -84,19 +90,15 @@ class PricingPageGUI(tk.Frame):
         displayCustomerTitle.grid(row=0, column=3, columnspan=4, pady=10, padx=10)
 
         self.enter_customerNumber2 = ttk.Entry(self, width=20)
-        self.enter_customerNumber2.grid(row=1, column =4, pady=5, padx=20, sticky="ne")
+        self.enter_customerNumber2.grid(row=1, column =4, pady=5, padx=10, sticky="ne")
         label_customerNumber2 = tk.Label(self, text="Customer Number", bg="white")
-        label_customerNumber2.grid(row=1, column=3, pady=2, sticky= "ne")
+        label_customerNumber2.grid(row=1, column=3, pady=2, sticky= "nw")
 
         displayInfo = ttk.Button(self, text = "Display Levels", command = lambda:[self.getPriceLevels(), self.clearEntry()])
         displayInfo.grid(row=2, column=3, columnspan=3, pady=2)
 
         self.customerT = tk.Text(self, height = 4, width=3)
         self.customerT.grid(row = 3, column = 3, columnspan=3, sticky="nsew")
-
-        self.sep = ttk.Separator(self, orient="vertical")
-        self.sep.grid(row=0, column=3)
-
 
 
     ''' 5. Class methods'''
@@ -106,8 +108,8 @@ class PricingPageGUI(tk.Frame):
             if their enter/update/or delete customer action was successful or not, and the pricing
             breakdown of the information they entered.'''
         
-            self.T.delete(1.0, tk.END) #clears textbox before adding new message
-            self.T.insert(tk.END, " Status: " + status)
+            self.priceTxt.delete(1.0, tk.END) #clears textbox before adding new message
+            self.priceTxt.insert(tk.END, " Status: " + status)
 
     def updatePriceLevelsText(self, status):
             '''This function updates the price levels text box. The status text tells the user

@@ -26,8 +26,8 @@ class AdminPageGui(tk.Frame):
         blanklabel.grid(row =0, column =2)
 
         #Status text widgit
-        self.T = tk.Text(self, height = 2, width=5)
-        self.T.grid(row = 13, column = 0, columnspan=3, sticky="nsew")
+        self.T = tk.Text(self, height = 3, width=5)
+        self.T.grid(row = 0, column = 2, columnspan=2, sticky="nsew")
         self.T.insert(tk.END, "Status:")
 
         self.updateStatusText
