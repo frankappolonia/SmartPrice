@@ -21,14 +21,19 @@ class AdminPageGui(tk.Frame):
 
         tk.Widget.configure(self, background='white')
 
-        #this provides formatting for a 3 column grid
-        blanklabel = tk.Label(self, text="", padx=50, bg='white')
-        blanklabel.grid(row =0, column =2)
+        #seperators
+        verticalSep = ttk.Separator(self, orient='vertical')
+        verticalSep.grid(row=0, column=2, rowspan=15, padx=20, sticky='wens')
+        horizontalSep = ttk.Separator(self, orient='horizontal')
+        horizontalSep.grid(row=0, column=0, columnspan=9, sticky='new')
 
         #Status text widgit
-        self.T = tk.Text(self, height = 3, width=5)
-        self.T.grid(row = 0, column = 2, columnspan=2, sticky="nsew")
+        self.T = tk.Text(self, height = 6, width=25, fg='gray')
+        self.T.grid(row = 6, column = 3, columnspan=2, sticky="ns")
         self.T.insert(tk.END, "Status:")
+
+        #label_= tk.Label(self, text="", bg='white')
+        #label_.grid(row = 0, column=2, rowspan=4, pady=2, sticky='ew')
 
         self.updateStatusText
         self.clearEntry
@@ -37,63 +42,63 @@ class AdminPageGui(tk.Frame):
         self.insertCustomer
 
         addCustomerTitle = tk.Label(self, text="Add Customer", font=LARGE_FONT, bg='white')
-        addCustomerTitle.grid(row=0, column=1, pady=10)
+        addCustomerTitle.grid(row=0, column=0, pady=10, sticky='w')
 
-        self.enter_customerNumber = ttk.Entry(self, width =20) 
-        self.enter_customerNumber.grid(row = 1, column=1, pady=5,sticky=tk.W)
+        self.enter_customerNumber = ttk.Entry(self, width =15) 
+        self.enter_customerNumber.grid(row = 1, column=1, pady=5,sticky='e')
         label_customerNumber = tk.Label(self, text="Customer Number ", bg='white')
-        label_customerNumber.grid(row = 1, column=0, pady=2, sticky=tk.E)
+        label_customerNumber.grid(row = 1, column=0, pady=2, sticky='w')
 
-        self.enter_customerName = ttk.Entry(self, width =20)
-        self.enter_customerName.grid(row = 2, column=1, pady=5, sticky=tk.W)
+        self.enter_customerName = ttk.Entry(self, width =15)
+        self.enter_customerName.grid(row = 2, column=1, pady=5, sticky='e')
         label_customerName = tk.Label(self, text="Customer Name ", bg='white')
-        label_customerName.grid(row = 2, column=0, pady=2, sticky=tk.E)
+        label_customerName.grid(row = 2, column=0, pady=2, sticky='w')
 
-        self.enter_ListPriceMod = ttk.Entry(self, width =20)
-        self.enter_ListPriceMod.grid(row = 3, column=1, pady=5, sticky=tk.W)
+        self.enter_ListPriceMod = ttk.Entry(self, width =15)
+        self.enter_ListPriceMod.grid(row = 3, column=1, pady=5, sticky='e')
         label_ListPriceMod = tk.Label(self, text="List Price Mod ", bg='white')
-        label_ListPriceMod.grid(row = 3, column=0, pady=2, sticky=tk.E)
+        label_ListPriceMod.grid(row = 3, column=0, pady=2, sticky='w')
 
         submitCustomer = ttk.Button(self, text = "Add customer to DB", command = lambda: self.insertCustomer()) 
-        submitCustomer.grid(row=4, column=0, columnspan=3, pady=2)
+        submitCustomer.grid(row=4, column=0, columnspan=2, pady=2, sticky='we')
 
         '''3. Update Customer'''
         self.updateCustomer
 
         updateCustomerTitle = tk.Label(self, text="Update Customer", font=LARGE_FONT, bg='white')
-        updateCustomerTitle.grid(row=5, column=1, pady=10)
+        updateCustomerTitle.grid(row=0, column=4, columnspan=1, pady=10, sticky='w')
 
-        self.update_customerNumber = ttk.Entry(self, width =20) 
-        self.update_customerNumber.grid(row = 6, column=1, pady=5,sticky=tk.W)
-        label_updateCustomerNumber = tk.Label(self, text="Customer Number ", bg='white')
-        label_updateCustomerNumber.grid(row = 6, column=0, pady=2, sticky=tk.E)
+        self.update_customerNumber = ttk.Entry(self, width =15) 
+        self.update_customerNumber.grid(row = 1, column=4, pady=5, sticky='e')
+        label_updateCustomerNumber = tk.Label(self, text="Customer Number", bg='white')
+        label_updateCustomerNumber.grid(row = 1, column=3, pady=2, sticky='w')
 
-        self.update_customerName = ttk.Entry(self, width =20)
-        self.update_customerName.grid(row = 7, column=1, pady=5, sticky=tk.W)
-        label_updateCustomerName = tk.Label(self, text="Customer Name ", bg='white')
-        label_updateCustomerName.grid(row = 7, column=0, pady=2, sticky=tk.E)
+        self.update_customerName = ttk.Entry(self, width =15)
+        self.update_customerName.grid(row = 2, column=4, pady=5, sticky='e')
+        label_updateCustomerName = tk.Label(self, text="Customer Name", bg='white')
+        label_updateCustomerName.grid(row = 2, column=3, pady=2, sticky='w')
 
-        self.update_ListPriceMod = ttk.Entry(self, width =20)
-        self.update_ListPriceMod.grid(row = 8, column=1, pady=5, sticky=tk.W)
+        self.update_ListPriceMod = ttk.Entry(self, width =15)
+        self.update_ListPriceMod.grid(row = 3, column=4, pady=5, sticky='e')
         label_updateListPriceMod = tk.Label(self, text="List Price Mod", bg='white')
-        label_updateListPriceMod.grid(row = 8, column=0, pady=2, sticky=tk.E)
+        label_updateListPriceMod.grid(row = 3, column=3, pady=2, sticky='w')
 
         submitUpdateCustomer = ttk.Button(self, text = "Update customer", command = lambda: self.updateCustomer())
-        submitUpdateCustomer.grid(row=9, column=0, columnspan=3, pady=2)
+        submitUpdateCustomer.grid(row=4, column=3, columnspan=2, pady=2, sticky='we')
 
         '''4. Delete Customer'''
         self.delCustomer
 
         deleteCustomerTitle = tk.Label(self, text="Delete Customer", font=LARGE_FONT, bg='white')
-        deleteCustomerTitle.grid(row=10, column=1, pady=10)
+        deleteCustomerTitle.grid(row=9, column=0, columnspan=2, pady=10, sticky='w')
 
         self.delete_customerNumber = ttk.Entry(self, width =20) 
-        self.delete_customerNumber.grid(row = 11, column=1, pady=5,sticky=tk.W)
+        self.delete_customerNumber.grid(row = 10, column=1, pady=5,sticky='e')
         label_deleteCustomerNumber = tk.Label(self, text="Customer Number ", bg='white')
-        label_deleteCustomerNumber.grid(row = 11, column=0, pady=2, sticky=tk.E)
+        label_deleteCustomerNumber.grid(row = 10, column=0, pady=2, sticky='w')
 
         submitDeleteCustomer = ttk.Button(self, text = "Delete customer", command = lambda: self.delCustomer())
-        submitDeleteCustomer.grid(row=12, column=0, columnspan=3, pady=2)
+        submitDeleteCustomer.grid(row=12, column=0, columnspan=2, pady=2, sticky='we')
 
 
     ''' 5. CLASS Methods '''

@@ -5,12 +5,13 @@ import AdminPage, PricingPage
 
 
 '''This file contains the class for the main GUI. This is where the main TK frame is built
-and all other sub-pages are imported to. The main frame essentially is like a shell.
+and all other sub-pages are imported to. The main frame essentially is like a shell
+(or a stage if you have used JavaFX).
 GUI pages are called into this frame, rather than instatiating a new frame for 
 every page. For instance, if a user selects the admin page, the gui page specs 
 will be loaded in the BaseFrame class.'''
 
-LARGE_FONT= ("Verdana", 12)
+LARGE_FONT= ("Futura", 15)
 class BaseFrame(tk.Tk):
 
 
@@ -18,7 +19,7 @@ class BaseFrame(tk.Tk):
         
         tk.Tk.__init__(self, *args, **kwargs)
 
-        container = tk.Frame(self, width=500, height=500, bg="white")
+        container = tk.Frame(self, width=500, height=500, bg="#fa6e6e")
         container.pack( fill=None, expand = False)
         container.grid_rowconfigure(0, weight=10)
         container.grid_columnconfigure(0, weight=10)
@@ -55,7 +56,7 @@ class StartPage(tk.Frame):
 
         self.style = ttk.Style()
         self.style.theme_use('vista')
-        self.style.configure('TButton', background='blue',foreground = 'black', borderwidth=1, focusthickness=3)
+        self.style.configure('TButton', background='#63b0ff',foreground = 'black', borderwidth=1, focusthickness=15)
 
         #self.buttonImg = tk.PhotoImage(file="roundedButton_15x10.png")
 
