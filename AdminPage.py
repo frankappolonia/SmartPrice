@@ -3,6 +3,7 @@ from tkinter import ttk
 import CustomerBuilder
  
 LARGE_FONT= ("Verdana", 12)
+MEDIUM_FONT= ("Verdana", 8)
 class AdminPageGui(tk.Frame):
 
     ''' Class that builds the admin page. Here, the user can add, update or delete
@@ -25,15 +26,15 @@ class AdminPageGui(tk.Frame):
         verticalSep = ttk.Separator(self, orient='vertical')
         verticalSep.grid(row=0, column=2, rowspan=15, padx=20, sticky='wens')
         horizontalSep = ttk.Separator(self, orient='horizontal')
-        horizontalSep.grid(row=0, column=0, columnspan=9, sticky='new')
+        horizontalSep.grid(row=0, column=0, columnspan=7, sticky='new')
 
         #Status text widgit
-        self.T = tk.Text(self, height = 6, width=25, fg='gray')
-        self.T.grid(row = 6, column = 3, columnspan=2, sticky="ns")
-        self.T.insert(tk.END, "Status:")
-
-        #label_= tk.Label(self, text="", bg='white')
-        #label_.grid(row = 0, column=2, rowspan=4, pady=2, sticky='ew')
+        self.status = ''
+        status = tk.Label(self, text = "Status: " + self.status, font=MEDIUM_FONT, bg='#e3feff' )
+        status.grid(row=6, column = 3, sticky='w', pady=10)
+        #self.T = tk.Text(self, height = 8, width=30, bg='#f2f2f2')
+        #self.T.grid(row = 6, column = 3, columnspan=1, pady=10, sticky="n")
+        #self.T.insert(tk.END, "Status:")
 
         self.updateStatusText
         self.clearEntry
@@ -66,7 +67,7 @@ class AdminPageGui(tk.Frame):
         self.updateCustomer
 
         updateCustomerTitle = tk.Label(self, text="Update Customer", font=LARGE_FONT, bg='white')
-        updateCustomerTitle.grid(row=0, column=4, columnspan=1, pady=10, sticky='w')
+        updateCustomerTitle.grid(row=0, column=3, columnspan=1, pady=10, sticky='w')
 
         self.update_customerNumber = ttk.Entry(self, width =15) 
         self.update_customerNumber.grid(row = 1, column=4, pady=5, sticky='e')
@@ -90,15 +91,15 @@ class AdminPageGui(tk.Frame):
         self.delCustomer
 
         deleteCustomerTitle = tk.Label(self, text="Delete Customer", font=LARGE_FONT, bg='white')
-        deleteCustomerTitle.grid(row=9, column=0, columnspan=2, pady=10, sticky='w')
+        deleteCustomerTitle.grid(row=6, column=0, columnspan=2, pady=10, sticky='sw')
 
         self.delete_customerNumber = ttk.Entry(self, width =20) 
-        self.delete_customerNumber.grid(row = 10, column=1, pady=5,sticky='e')
+        self.delete_customerNumber.grid(row = 7, column=1, pady=2,sticky='se')
         label_deleteCustomerNumber = tk.Label(self, text="Customer Number ", bg='white')
-        label_deleteCustomerNumber.grid(row = 10, column=0, pady=2, sticky='w')
+        label_deleteCustomerNumber.grid(row = 7, column=0, pady=2, sticky='sw')
 
         submitDeleteCustomer = ttk.Button(self, text = "Delete customer", command = lambda: self.delCustomer())
-        submitDeleteCustomer.grid(row=12, column=0, columnspan=2, pady=2, sticky='we')
+        submitDeleteCustomer.grid(row=8, column=0, columnspan=2, pady=2, sticky='nwe')
 
 
     ''' 5. CLASS Methods '''
@@ -118,8 +119,12 @@ class AdminPageGui(tk.Frame):
             if their enter/update/or delete customer action was successful or not. This function
             is called with every button command in this class.'''
 
-        self.T.delete(1.0, tk.END) #clears textbox before adding new message
-        self.T.insert(tk.END, " Status: " + status)
+        #self.T.delete(1.0, tk.END) #clears textbox before adding new message
+        #self.T.insert(tk.END, " Status: " + status)
+        self.status = status
+        status = tk.Label(self, text = "Status: \n" + self.status, font=MEDIUM_FONT, bg='#e3feff' )
+        status.grid(row=6, column = 3, columnspan=2, sticky='w', pady=10)
+
          
     def insertCustomer(self):
         '''Takes the values entered in the GUI and passes them to the createCustomer function from
@@ -141,7 +146,7 @@ class AdminPageGui(tk.Frame):
             self.clearEntry()
 
         else: #catch for invalid input
-            self.updateStatusText("Invalid input. Account number and list price mod must be integers!")
+            self.updateStatusText("Invalid input. Account number \n and list price mod must be integers!")
             self.clearEntry()
 
     def updateCustomer(self):
@@ -162,7 +167,7 @@ class AdminPageGui(tk.Frame):
             self.updateStatusText("customer {0} updated.".format(self.update_customerNumber.get()))
             self.clearEntry()
         else:
-            self.updateStatusText("Invalid input. Account number and list price mod must be integers!")
+            self.updateStatusText("Invalid input. Account number \n and list price mod must be integers!")
             self.clearEntry()
 
     def delCustomer(self):
@@ -180,5 +185,5 @@ class AdminPageGui(tk.Frame):
             self.updateStatusText("customer {0} deleted".format(self.delete_customerNumber.get()))
             self.clearEntry()
         else:
-            self.updateStatusText("Invalid input. Account number must be an integer!")
+            self.updateStatusText("Invalid input. Account number \nmust be an integer!")
             self.clearEntry()
