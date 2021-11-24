@@ -17,18 +17,21 @@ class UniversalModifiers():
         expiditedFee = (deliveryFee * 1.20)
         return expiditedFee
     
-    def timeSinkFee(days, price):
+    def timeSinkFee(days):
         '''Takes a number of days spent on an order and the current price of the part,
         upcharging it based on the time investment of aquiring the part'''
         if days == 1:
-            newPrice = price * 1.10
+            mod = 1.10
         elif days == 2: 
-            newPrice = price * 1.20
+            mod =  1.20
         elif days >= 3: 
-            newPrice = price *1.30
-        return newPrice
+            mod = 1.30
+        return mod
     
     def rareProductFee(listPrice):
         '''Provides an upcharge for a high demand product/product that cant be found
         elsewhere/product that customer will buy no matter what'''
         return listPrice*2.0
+    
+    def truckDownFee(self):
+        return 50

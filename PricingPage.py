@@ -1,6 +1,7 @@
 import tkinter as tk
 from tkinter import ttk
-from dbFunctions import select_AllCustomerInfo
+import dbFunctions
+from UniversalModifiers import UniversalModifiers
 
 
 LARGE_FONT= ("Verdana", 12)
@@ -73,8 +74,8 @@ class PricingPageGUI(tk.Frame):
         label_compPrice.grid(row = 7, column=0, pady=2, sticky=tk.E)
 
         ''' 3. Check buttons pricing modifiers'''
-        self.update_ListPriceMod = ttk.Checkbutton(self, width =17, text="Expidited Delivery")
-        self.update_ListPriceMod.grid(row = 8, column=1, pady=5, sticky=tk.W)
+        self.check_expiditedDeliery = ttk.Checkbutton(self, width =17, text="Expidited Delivery")
+        self.update_expiditedDelivery.grid(row = 8, column=1, pady=5, sticky=tk.W)
 
         self.check_hotItem = ttk.Checkbutton(self, width = 15, text="Hot Item")
         self.check_hotItem.grid(row = 8, column=0, pady=5, sticky= tk.W )
@@ -124,7 +125,7 @@ class PricingPageGUI(tk.Frame):
         It then displays it in the customerT text widget.'''
 
         customerNum = self.enter_customerNumber2.get()
-        info = select_AllCustomerInfo(customerNum)
+        info = dbFunctions.select_AllCustomerInfo(customerNum)
         list(info)
 
         self.updatePriceLevelsText("Customer: {0} \n Name: {1} \n List price mod: {2} ".format(customerNum, info[0], info[2]))
@@ -137,3 +138,37 @@ class PricingPageGUI(tk.Frame):
         self.enter_shippingCost.delete(0, tk.END)
         self.enter_listPrice.delete(0, tk.END)
         self.enter_compPrice.delete(0, tk.END)
+    
+    def calculatePricing(self):
+        '''Function that calculates pricing based upon user inputs'''
+        customerNumber = int(self.enter_customerNumber.get())
+        shippingCost = int(self.enter_shippingCost.get())
+        listPrice = int(self.enter_listPrice.get())
+        listPriceMod = listPrice * int(dbFunctions.select_listPriceMod(customerNumber))
+        compPrice = int(self.enter_compPrice.get())
+
+        hotItemMod,expiditedMod = 1
+        truckDown = 0
+
+        # check boxes
+        if self.check_hotItem.getboolean():
+            hotItemMod = None
+        if self.check_truckDown.getboolean():
+            truckDown = UniversalModifiers.truckDownFee()
+        if  self.check_expiditedDeliery.getboolean():
+            expiditedMod = UniversalModifiers.expiditedDeliveryMod(shippingCost)
+    
+
+        days = int(self.enter_timeSpent.get())
+        if days >= 1:
+            timeSpentMod = UniversalModifiers.timeSinkFee(days)
+
+            totalCost =  (listPriceMod * timeSpentMod) + shippingCost
+        else:
+            totalCost =  listPriceMod + shippingCost
+
+
+        
+        
+        return totalCost
+
