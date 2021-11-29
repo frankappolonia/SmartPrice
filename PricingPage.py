@@ -51,31 +51,31 @@ class PricingPageGUI(tk.Frame):
         self.enter_customerNumber = ttk.Entry(self, width =20) 
         self.enter_customerNumber.grid(row = 1, column=1, pady=5,sticky=tk.W)
         label_customerNumber = tk.Label(self, text="Customer Number ", bg='white')
-        label_customerNumber.grid(row = 1, column=0, pady=2, sticky=tk.E)
+        label_customerNumber.grid(row = 1, column=0, pady=2, sticky='w')
 
         self.enter_timeSpent = ttk.Entry(self, width =20)
         self.enter_timeSpent.grid(row = 2, column=1, pady=5, sticky=tk.W)
         label_timeSpent = tk.Label(self, text="Time Spent (Days) ", bg='white')
-        label_timeSpent.grid(row = 2, column=0, pady=2, sticky=tk.E)
+        label_timeSpent.grid(row = 2, column=0, pady=2, sticky='w')
 
         self.enter_shippingCost= ttk.Entry(self, width =20)
         self.enter_shippingCost.grid(row = 3, column=1, pady=5, sticky=tk.W)
         label_shippingCost = tk.Label(self, text="Shipping costs ", bg='white')
-        label_shippingCost.grid(row = 3, column=0, pady=2, sticky=tk.E)
+        label_shippingCost.grid(row = 3, column=0, pady=2, sticky='w')
 
         self.enter_listPrice = ttk.Entry(self, width =20) 
-        self.enter_listPrice.grid(row = 6, column=1, pady=5,sticky=tk.W)
+        self.enter_listPrice.grid(row = 4, column=1, pady=5,sticky=tk.W)
         label_listPrice = tk.Label(self, text="List Price ", bg='white')
-        label_listPrice.grid(row = 6, column=0, pady=2, sticky=tk.E)
+        label_listPrice.grid(row = 4, column=0, pady=2, sticky='w')
 
         self.enter_compPrice = ttk.Entry(self, width =20)
-        self.enter_compPrice.grid(row = 7, column=1, pady=5, sticky=tk.W)
+        self.enter_compPrice.grid(row = 5, column=1, pady=5, sticky=tk.W)
         label_compPrice = tk.Label(self, text="Competitor Price ", bg='white')
-        label_compPrice.grid(row = 7, column=0, pady=2, sticky=tk.E)
+        label_compPrice.grid(row = 5, column=0, pady=2, sticky='w')
 
         ''' 3. Check buttons pricing modifiers'''
-        self.check_expiditedDeliery = ttk.Checkbutton(self, width =17, text="Expidited Delivery")
-        self.update_expiditedDelivery.grid(row = 8, column=1, pady=5, sticky=tk.W)
+        self.check_expiditedDelivery = ttk.Checkbutton(self, width =17, text="Expidited Delivery")
+        self.check_expiditedDelivery.grid(row = 8, column=1, pady=5, sticky=tk.W)
 
         self.check_hotItem = ttk.Checkbutton(self, width = 15, text="Hot Item")
         self.check_hotItem.grid(row = 8, column=0, pady=5, sticky= tk.W )
