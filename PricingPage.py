@@ -1,5 +1,6 @@
 import tkinter as tk
-from tkinter import ttk
+from tkinter import IntVar, ttk
+
 import dbFunctions
 from UniversalModifiers import UniversalModifiers
 
@@ -74,17 +75,20 @@ class PricingPageGUI(tk.Frame):
         label_compPrice.grid(row = 5, column=0, pady=2, sticky='w')
 
         ''' 3. Check buttons pricing modifiers'''
-        self.check_expiditedDelivery = ttk.Checkbutton(self, width =17, text="Expidited Delivery")
+        self.expiditedControl = IntVar()
+        self.check_expiditedDelivery = ttk.Checkbutton(self, width =17, text="Expidited Delivery", variable=self.expiditedControl)
         self.check_expiditedDelivery.grid(row = 8, column=1, pady=5, sticky=tk.W)
 
-        self.check_hotItem = ttk.Checkbutton(self, width = 15, text="Hot Item")
+        self.hotControl = IntVar()
+        self.check_hotItem = ttk.Checkbutton(self, width = 15, text="Hot Item", variable=self.hotControl)
         self.check_hotItem.grid(row = 8, column=0, pady=5, sticky= tk.W )
 
-        self.check_truckDown = ttk.Checkbutton(self, width = 15, text="Truck Down")
+        self.truckdownControl = IntVar()
+        self.check_truckDown = ttk.Checkbutton(self, width = 15, text="Truck Down", variable=self.truckdownControl)
         self.check_truckDown.grid(row = 8, column=2, pady=5, sticky= tk.W )
 
-        submitUpdateCustomer = ttk.Button(self, text = "Calculate Pricing", command = lambda:[self.updateStatusText("customer {0} updated.".format(self.update_customerNumber.get())), self.clearEntry()])
-        submitUpdateCustomer.grid(row=9, column=0, columnspan=3, pady=2)
+        calculatePriceBt = ttk.Button(self, text = "Calculate Pricing", command = lambda:[self.calculatePricing()])
+        calculatePriceBt.grid(row=9, column=0, columnspan=3, pady=2)
 
         ''' 4. Display customer info '''
         displayCustomerTitle = tk.Label(self, text="Display Customer Levels", font=LARGE_FONT, bg='white')
@@ -111,6 +115,7 @@ class PricingPageGUI(tk.Frame):
         
             self.priceTxt.delete(1.0, tk.END) #clears textbox before adding new message
             self.priceTxt.insert(tk.END, " Status: " + status)
+            self.clearEntry()
 
     def updatePriceLevelsText(self, status):
             '''This function updates the price levels text box. The status text tells the user
@@ -140,35 +145,52 @@ class PricingPageGUI(tk.Frame):
         self.enter_compPrice.delete(0, tk.END)
     
     def calculatePricing(self):
-        '''Function that calculates pricing based upon user inputs'''
+        '''Function that calculates pricing based upon user inputs and customer pricing
+        modifiers in  the database.
+        Precondition: User interacting with an instance of PricingPageGUI() 
+        Postcondition: Returns a float 
+        '''
+
         customerNumber = int(self.enter_customerNumber.get())
         shippingCost = int(self.enter_shippingCost.get())
         listPrice = int(self.enter_listPrice.get())
-        listPriceMod = listPrice * int(dbFunctions.select_listPriceMod(customerNumber))
-        compPrice = int(self.enter_compPrice.get())
+        listPriceMod = int(dbFunctions.select_listPriceMod(customerNumber))
+        truckDownFee, timeSpentMod, = 0, 0
+        #compPrice = int(self.enter_compPrice.get())
+        print(listPriceMod)
 
-        hotItemMod,expiditedMod = 1
-        truckDown = 0
-
+        #This is the baseline pprice
+        totalPrice = (shippingCost + listPrice) * listPriceMod
+      
         # check boxes
-        if self.check_hotItem.getboolean():
-            hotItemMod = None
-        if self.check_truckDown.getboolean():
-            truckDown = UniversalModifiers.truckDownFee()
-        if  self.check_expiditedDeliery.getboolean():
-            expiditedMod = UniversalModifiers.expiditedDeliveryMod(shippingCost)
-    
+      
+        if self.hotControl == 1:
+            totalPrice = UniversalModifiers.rareProductFee(totalPrice) #multiplying markup for rare product
 
+        if self.truckdownControl == 1:
+            truckDownFee = UniversalModifiers.truckDownFee()
+            totalPrice += truckDownFee # adding markup for a truck down situation
+
+        if  self.expiditedControl == 1:
+            shippingCost = UniversalModifiers.expiditedDeliveryMod(shippingCost)
+            totalPrice += shippingCost #adding shipping cost with expidited shipping mod
+        else:
+            totalPrice += shippingCost #adding shipping xcost with no expidited mod
+
+        # check for timesink mod
         days = int(self.enter_timeSpent.get())
         if days >= 1:
             timeSpentMod = UniversalModifiers.timeSinkFee(days)
+            totalPrice = totalPrice * timeSpentMod #markup for time spent researching part
 
-            totalCost =  (listPriceMod * timeSpentMod) + shippingCost
-        else:
-            totalCost =  listPriceMod + shippingCost
+        print(listPrice)
+        priceBreakdownText = "\nList Price: {:.2f} \n List Price Mod: {:.2f} \n Shipping Cost: {:.2f} \n Truck Down Fee: {:.2f}\n Time Spent Mod: {:.2f} \n Final Price: {:.2f} ".format(listPrice, listPriceMod, shippingCost,
+        truckDownFee, timeSpentMod, totalPrice)
 
+        #self.priceTxt.insert(tk.END, priceBreakdownText)
+        self.updatePriceBreakdownText(priceBreakdownText)
+        return priceBreakdownText
+    
 
         
-        
-        return totalCost
 
