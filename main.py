@@ -1,7 +1,8 @@
 import tkinter as tk
 from tkinter import ttk
 from tkinter.constants import BOTTOM, TOP, TRUE 
-import AdminPage, PricingPage
+from UI import AdminPage, PricingPage
+from Images import *
 
 
 
