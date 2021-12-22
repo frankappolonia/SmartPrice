@@ -1,10 +1,7 @@
 import tkinter as tk
 from tkinter import ttk
 from tkinter.constants import BOTTOM, TOP, TRUE 
-from UI import AdminPage, PricingPage
-from Images import *
-
-
+import UI
 
 
 '''This file contains the class for the main GUI. This is where the main TK frame is built
@@ -29,7 +26,7 @@ class BaseFrame(tk.Tk):
         container.grid_columnconfigure(0, weight=10)
 
         self.frames = {}
-        for F in (StartPage, PasswordPage, AdminPage.AdminPageGui, PricingPage.PricingPageGUI):
+        for F in (StartPage, PasswordPage, UI.AdminPageGui, UI.PricingPageGUI):
             frame = F(container, self)
             self.frames[F] = frame
             frame.grid(row=1, column=2, sticky="nsew")
@@ -54,6 +51,7 @@ class StartPage(tk.Frame):
         self.frames = {}
         tk.Widget.configure(self, background='white')
 
+       
         self.img = tk.PhotoImage(file="Banner_clear_2_5.png")
         self.panel = tk.Label(self, image=self.img)
         #self.panel.grid(row=1, column=1, columnspan=5, sticky="ew")

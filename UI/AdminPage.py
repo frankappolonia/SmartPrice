@@ -1,5 +1,6 @@
 import tkinter as tk
 from tkinter import ttk
+#from db import CustomerBuilder
 from db import CustomerBuilder
  
 LARGE_FONT= ("Verdana", 12)
@@ -27,7 +28,7 @@ class AdminPageGui(tk.Frame):
         verticalSep.grid(row=0, column=2, rowspan=15, padx=20, sticky='wens')
         horizontalSep = ttk.Separator(self, orient='horizontal')
         horizontalSep.grid(row=0, column=0, columnspan=7, sticky='new')
-
+    
         #Status text widgit
         self.status = ''
         status = tk.Label(self, text = "Status: " + self.status, font=MEDIUM_FONT, bg='#e3feff' )

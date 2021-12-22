@@ -1,9 +1,7 @@
 import tkinter as tk
 from tkinter import IntVar, ttk
 from db import dbFunctions
-from UI import UniversalModifiers
-
-
+import UI
 LARGE_FONT= ("Verdana", 12)
 
 class PricingPageGUI(tk.Frame):
@@ -164,14 +162,14 @@ class PricingPageGUI(tk.Frame):
         # check boxes
       
         if self.hotControl == 1:
-            totalPrice = UniversalModifiers.Mods.rareProductFee(totalPrice) #multiplying markup for rare product
+            totalPrice = UI.Mods.rareProductFee(totalPrice) #multiplying markup for rare product
 
         if self.truckdownControl == 1:
-            truckDownFee = UniversalModifiers.Mods.truckDownFee()
+            truckDownFee = UI.Mods.truckDownFee()
             totalPrice += truckDownFee # adding markup for a truck down situation
 
         if  self.expiditedControl == 1:
-            shippingCost = UniversalModifiers.Mods.expiditedDeliveryMod(shippingCost)
+            shippingCost = UI.Mods.expiditedDeliveryMod(shippingCost)
             totalPrice += shippingCost #adding shipping cost with expidited shipping mod
         else:
             totalPrice += shippingCost #adding shipping xcost with no expidited mod
@@ -179,7 +177,7 @@ class PricingPageGUI(tk.Frame):
         # check for timesink mod
         days = int(self.enter_timeSpent.get())
         if days >= 1:
-            timeSpentMod = UniversalModifiers.Mods.timeSinkFee(days)
+            timeSpentMod = UI.Mods.timeSinkFee(days)
             totalPrice = totalPrice * timeSpentMod #markup for time spent researching part
 
         print(listPrice)
