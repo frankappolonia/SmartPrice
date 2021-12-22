@@ -1,5 +1,6 @@
 from sqlite3.dbapi2 import Error, IntegrityError
 from db import dbFunctions
+import os.path
 
 '''Module that has different functions for the customer table:
 1. User inputs for establishing new customer info, updating info, and deleting info.
@@ -7,7 +8,10 @@ from db import dbFunctions
 3. Creating and inserting updated customer info into the customer table.
 4. Deleting customers from the customer table.'''
 
-database = "C:\\Users\\appolofr\\Documents\\Github\\SmartPrice\\test.db"
+#database = "C:\\Users\\appolofr\\Documents\\Github\\SmartPrice\\test.db"
+
+my_path = os.path.abspath(os.path.dirname(__file__))   
+path = os.path.join(my_path, "../db/test.db")
 
 '''----------- 1. USER INPUTS --------------------'''
 
@@ -77,7 +81,7 @@ def createCustomer(customerInfo):
     Uses the commit_customer function.'''
 
     #database = "C:\\Users\\appolofr\\Documents\\Github\\SmartPrice\\test.db"
-    connection = dbFunctions.create_connection(database)
+    connection = dbFunctions.create_connection(path)
 
     with connection:
         # customerInfo is AWLAYS [accountNum, accountName, listPriceMod]
@@ -108,7 +112,7 @@ def updateCustomer(updatedSpecsList):
      Uses commit_updateCustomer function.'''
 
     #database = "C:\\Users\\appolofr\\Documents\\Github\\SmartPrice\\test.db"
-    connection = dbFunctions.create_connection(database)
+    connection = dbFunctions.create_connection(path)
 
     with connection:
         # updatedSpecsList is AWLAYS [acountNum, newAccountName, newListPriceMod]
@@ -138,7 +142,7 @@ def deleteCustomer(customerID):
         Uses the commit_deleteCustomer function.'''
 
     #database = "C:\\Users\\appolofr\\Documents\\Github\\SmartPrice\\test.db"
-    connection = dbFunctions.create_connection(database)
+    connection = dbFunctions.create_connection(path)
 
     with connection:
         commit_deleteCustomer(connection, customerID)
