@@ -120,11 +120,14 @@ class AdminPageGui(tk.Frame):
             if their enter/update/or delete customer action was successful or not. This function
             is called with every button command in this class.'''
 
-        #self.T.delete(1.0, tk.END) #clears textbox before adding new message
-        #self.T.insert(tk.END, " Status: " + status)
-        self.status = status
-        status = tk.Label(self, text = "Status: \n" + self.status, font=MEDIUM_FONT, bg='#e3feff' )
-        status.grid(row=6, column = 3, columnspan=2, sticky='w', pady=10)
+     
+        labelFrame = tk.Frame(self, width=200,height=100, bg = '#e3feff' )
+        labelFrame.pack_propagate(0)
+
+        statusLabel = tk.Label(labelFrame, text = "Status: \n" + status, font=MEDIUM_FONT, bg='#e3feff' )
+        statusLabel.pack()
+        
+        labelFrame.grid(row=6, column = 3, columnspan=2, sticky='w', pady=10)
 
          
     def insertCustomer(self):
