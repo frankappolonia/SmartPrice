@@ -71,7 +71,7 @@ class StartPage(tk.Frame):
         #adminPage.grid(row=3, column=0, columnspan=4, sticky = "nswe", pady=15)
         adminPage.pack(side=TOP)
 
-        pricingPage = ttk.Button(self, text = "Get Parts Pricing", command = lambda: controller.show_frame(PricingPage.PricingPageGUI))
+        pricingPage = ttk.Button(self, text = "Get Parts Pricing", command = lambda: controller.show_frame(UI.PricingPageGUI))
         #pricingPage.grid(row=4, column=0, columnspan=4, sticky="nsew", pady=15)
         pricingPage.pack(side=TOP, pady=20)
 
@@ -101,7 +101,7 @@ class PasswordPage(tk.Frame):
         self.submitPasswrd.grid(row = 3, column=2, sticky='nsew')
 
         '''Bypass button is strictly for testing purposes, will remove upon final release'''
-        self.bypass = ttk.Button(self, text="Password bypass (For Testing purposes)", command=lambda: controller.show_frame(AdminPage.AdminPageGui))
+        self.bypass = ttk.Button(self, text="Password bypass (For Testing purposes)", command=lambda: controller.show_frame(UI.AdminPageGui))
         self.bypass.grid(row = 4, column=2, sticky='nsew')
 
         def checkPassword(username, password):
@@ -109,7 +109,7 @@ class PasswordPage(tk.Frame):
             correctPass = 'teddy123'
     
             if username == correctUser and password == correctPass:
-                controller.show_frame(AdminPage.AdminPageGui)
+                controller.show_frame(UI.AdminPageGui)
                 
         
 app = BaseFrame()
