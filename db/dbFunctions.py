@@ -1,12 +1,16 @@
 import sqlite3
 from sqlite3 import Error
+import os.path
 
 '''Module that imports SQLite. Has numerous basic database functions:
 1. Function to establish DB connection
 2. Function to create table
 3. Functions to select data from a table'''
 
-database = "C:\\Users\\appolofr\\Documents\\Github\\SmartPrice\\test.db"
+#database = "C:\\Users\\appolofr\\Documents\\Github\\SmartPrice\\test.db"
+
+my_path = os.path.abspath(os.path.dirname(__file__))   
+database = os.path.join(my_path, "../db/test.db")
 
 '''---------- 1. Connection to DB-----------------'''
 
