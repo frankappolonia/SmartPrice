@@ -3,7 +3,6 @@ from tkinter import ttk
 from tkinter.constants import BOTTOM, TOP, TRUE 
 import UI
 
-
 '''This file contains the class for the main GUI. This is where the main TK frame is built
 and all other sub-pages are imported to. The main frame essentially is like a shell
 (or a stage if you have used JavaFX).
