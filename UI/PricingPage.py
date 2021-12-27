@@ -1,7 +1,6 @@
 import tkinter as tk
 from tkinter import IntVar, ttk
 from db import dbFunctions
-#import UI
 from .UniversalModifiers import Mods
 
 LARGE_FONT= ("Verdana", 12)
