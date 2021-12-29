@@ -1,6 +1,6 @@
 import tkinter as tk
 from tkinter import Widget, ttk
-from tkinter.constants import TOP
+from tkinter.constants import LEFT, TOP, X, Y
 import UI
 
 '''This file contains the class for the main GUI. This is where the main TK frame is built
@@ -31,8 +31,10 @@ class BaseFrame(tk.Tk):
             self.frames[F] = frame
             frame.grid(row=1, column=2, sticky="nsew")
        
-        backButton = ttk.Button(container, width=5, style='Accent.TButton', text="Back", command = lambda: self.show_frame(StartPage))
-        backButton.grid(row=0, column=1, sticky = "w")
+        backBt = ttk.Button(container, width=5, text="Back", command = lambda: self.show_frame(StartPage))
+        backBt.grid(row=0, column=1, sticky = "w")
+        homeBt = ttk.Button(container, width=5, text="Home", command = lambda: self.show_frame(StartPage))
+        homeBt.grid(row=0, column=2, sticky = "w")
 
         self.show_frame(StartPage)
 
@@ -51,21 +53,25 @@ class StartPage(tk.Frame):
         self.frames = {}
         tk.Widget.configure(self, background='white')
 
+          #seperators
+        verticalSep = ttk.Separator(self, style='TSeparator', orient='vertical')
+        verticalSep.pack(side=LEFT, fill=Y)
+
+        horizontalSep = ttk.Separator(self, orient='horizontal')
+        horizontalSep.pack(side=TOP, fill=X)
 
         self.img = tk.PhotoImage(file="Banner_clear_2_5.png")
         self.panel = tk.Label(self, image=self.img)
         self.panel.pack(side=TOP)
 
-        #self.style = ttk.Style()
-        #self.style.configure('TButton', background='#63b0ff',foreground = 'black', borderwidth=1, focusthickness=15)
-            
+        
         welcomeLabel = tk.Label(self, text="Welcome to ABE SmartPrice!", font=LARGE_FONT, pady=50, bg='white')
         welcomeLabel.pack(side=TOP)
 
         adminPage = ttk.Button(self,  text = "Admin (Add, Update, Delete Customer)", command = lambda: controller.show_frame(PasswordPage))
         adminPage.pack(side=TOP)
 
-        pricingPage = ttk.Button(self, text = "Get Parts Pricing", command = lambda: controller.show_frame(UI.PricingPageGUI))
+        pricingPage = ttk.Button(self, width=32, text = "Get Parts Pricing", command = lambda: controller.show_frame(UI.PricingPageGUI))
         pricingPage.pack(side=TOP, pady=20)
 
 class PasswordPage(tk.Frame):
@@ -104,7 +110,7 @@ class PasswordPage(tk.Frame):
                 controller.show_frame(UI.AdminPageGui)
                 
         
-        
+
 app = BaseFrame()
 
 def change_theme():

@@ -1,5 +1,6 @@
 import tkinter as tk
 from tkinter import IntVar, ttk
+from tkinter.constants import Y
 from db import dbFunctions
 from .UniversalModifiers import Mods
 
@@ -27,8 +28,8 @@ class PricingPageGUI(tk.Frame):
         blanklabel.grid(row =0, column =2)
 
         #Status text widgit
-        self.priceTxt = tk.Text(self, height = 10, width=37)
-        self.priceTxt.grid(row = 13, column = 0, columnspan=3, sticky="nsw")
+        self.priceTxt = tk.Text(self, height = 7, width=37)
+        self.priceTxt.grid(row = 13, column = 0, pady=10, columnspan=3, sticky="n")
         self.priceTxt.insert(tk.END, "Price Breakdown:")
 
         addCustomerTitle = tk.Label(self, text="Get Pricing", font=LARGE_FONT, bg='white')
@@ -43,6 +44,10 @@ class PricingPageGUI(tk.Frame):
         #seperators
         verticalSep = ttk.Separator(self, orient='vertical')
         verticalSep.grid(row=0, column=3, rowspan=15, sticky='nsw')
+
+        verticalSep2 = ttk.Separator(self, style='TSeparator', orient='vertical')
+        verticalSep2.grid(row=0, column=0, rowspan=15, sticky='wns')
+
         horizontalSep = ttk.Separator(self, orient='horizontal')
         horizontalSep.grid(row=0, column=0, columnspan=7, sticky='new')
 
@@ -50,39 +55,39 @@ class PricingPageGUI(tk.Frame):
         self.enter_customerNumber = ttk.Entry(self, width =20) 
         self.enter_customerNumber.grid(row = 1, column=1, pady=5,sticky=tk.W)
         label_customerNumber = tk.Label(self, text="Customer Number ", bg='white')
-        label_customerNumber.grid(row = 1, column=0, pady=2, sticky='w')
+        label_customerNumber.grid(row = 1, column=0, padx=10, pady=2, sticky='w')
 
         self.enter_timeSpent = ttk.Entry(self, width =20)
         self.enter_timeSpent.grid(row = 2, column=1, pady=5, sticky=tk.W)
         label_timeSpent = tk.Label(self, text="Time Spent (Days) ", bg='white')
-        label_timeSpent.grid(row = 2, column=0, pady=2, sticky='w')
+        label_timeSpent.grid(row = 2, column=0, padx=10, pady=2, sticky='w')
 
         self.enter_shippingCost= ttk.Entry(self, width =20)
         self.enter_shippingCost.grid(row = 3, column=1, pady=5, sticky=tk.W)
         label_shippingCost = tk.Label(self, text="Shipping costs ", bg='white')
-        label_shippingCost.grid(row = 3, column=0, pady=2, sticky='w')
+        label_shippingCost.grid(row = 3, column=0, padx=10, pady=2, sticky='w')
 
         self.enter_listPrice = ttk.Entry(self, width =20) 
         self.enter_listPrice.grid(row = 4, column=1, pady=5,sticky=tk.W)
         label_listPrice = tk.Label(self, text="List Price ", bg='white')
-        label_listPrice.grid(row = 4, column=0, pady=2, sticky='w')
+        label_listPrice.grid(row = 4, column=0, padx=10, pady=2, sticky='w')
 
         self.enter_compPrice = ttk.Entry(self, width =20)
         self.enter_compPrice.grid(row = 5, column=1, pady=5, sticky=tk.W)
         label_compPrice = tk.Label(self, text="Competitor Price ", bg='white')
-        label_compPrice.grid(row = 5, column=0, pady=2, sticky='w')
+        label_compPrice.grid(row = 5, column=0, padx=10, pady=2, sticky='w')
 
         ''' 3. Check buttons pricing modifiers'''
         self.expiditedControl = IntVar()
-        self.check_expiditedDelivery = ttk.Checkbutton(self, width =17, text="Expidited Delivery", variable=self.expiditedControl)
+        self.check_expiditedDelivery = ttk.Checkbutton(self, width =17,style='Switch.TCheckbutton', text="Expidited Delivery", variable=self.expiditedControl)
         self.check_expiditedDelivery.grid(row = 8, column=1, pady=5, sticky=tk.W)
 
         self.hotControl = IntVar()
-        self.check_hotItem = ttk.Checkbutton(self, width = 15, text="Hot Item", variable=self.hotControl)
-        self.check_hotItem.grid(row = 8, column=0, pady=5, sticky= tk.W )
+        self.check_hotItem = ttk.Checkbutton(self, width = 15, style='Switch.TCheckbutton', text="Hot Item", variable=self.hotControl)
+        self.check_hotItem.grid(row = 8, column=0, padx=3, pady=5, sticky= tk.W )
 
         self.truckdownControl = IntVar()
-        self.check_truckDown = ttk.Checkbutton(self, width = 15, text="Truck Down", variable=self.truckdownControl)
+        self.check_truckDown = ttk.Checkbutton(self, width = 15, style='Switch.TCheckbutton', text="Truck Down", variable=self.truckdownControl)
         self.check_truckDown.grid(row = 8, column=2, pady=5, sticky= tk.W )
 
         calculatePriceBt = ttk.Button(self, text = "Calculate Pricing",  style='Accent.TButton', command = lambda:[self.calculatePricing()])
@@ -95,7 +100,7 @@ class PricingPageGUI(tk.Frame):
         self.enter_customerNumber2 = ttk.Entry(self, width=20)
         self.enter_customerNumber2.grid(row=1, column =4, pady=5, padx=10, sticky="ne")
         label_customerNumber2 = tk.Label(self, text="Customer Number", bg="white")
-        label_customerNumber2.grid(row=1, column=3, pady=2, sticky= "nw")
+        label_customerNumber2.grid(row=1, column=3, pady=2, padx=5, sticky= "nw")
 
         displayInfo = ttk.Button(self, text = "Display Levels",  style='Accent.TButton', command = lambda:[self.getPriceLevels(), self.clearEntry()])
         displayInfo.grid(row=2, column=3, columnspan=3, pady=2)

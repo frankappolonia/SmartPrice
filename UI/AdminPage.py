@@ -1,5 +1,6 @@
 import tkinter as tk
 from tkinter import ttk
+from tkinter.constants import X, Y
 from db import CustomerBuilder
  
 LARGE_FONT= ("Verdana", 12)
@@ -23,8 +24,11 @@ class AdminPageGui(tk.Frame):
         tk.Widget.configure(self, background='white')
 
         #seperators
-        verticalSep = ttk.Separator(self, orient='vertical')
+        verticalSep = ttk.Separator(self, style='TSeparator', orient='vertical')
         verticalSep.grid(row=0, column=2, rowspan=15, padx=20, sticky='wens')
+        verticalSep2 = ttk.Separator(self, style='TSeparator', orient='vertical')
+        verticalSep2.grid(row=0, column=0, sticky='wns')
+
         horizontalSep = ttk.Separator(self, orient='horizontal')
         horizontalSep.grid(row=0, column=0, columnspan=7, sticky='new')
     
@@ -40,25 +44,25 @@ class AdminPageGui(tk.Frame):
         self.insertCustomer
 
         addCustomerTitle = tk.Label(self, text="Add Customer", font=LARGE_FONT, bg='white')
-        addCustomerTitle.grid(row=0, column=0, pady=10, sticky='w')
+        addCustomerTitle.grid(row=0, column=0, padx=1, pady=10, sticky='w')
 
         self.enter_customerNumber = ttk.Entry(self, width =15) 
         self.enter_customerNumber.grid(row = 1, column=1, pady=5,sticky='e')
         label_customerNumber = tk.Label(self, text="Customer Number ", bg='white')
-        label_customerNumber.grid(row = 1, column=0, pady=2, sticky='w')
+        label_customerNumber.grid(row = 1, column=0, padx=1, pady=2, sticky='w')
 
         self.enter_customerName = ttk.Entry(self, width =15)
         self.enter_customerName.grid(row = 2, column=1, pady=5, sticky='e')
         label_customerName = tk.Label(self, text="Customer Name ", bg='white')
-        label_customerName.grid(row = 2, column=0, pady=2, sticky='w')
+        label_customerName.grid(row = 2, column=0, padx=1, pady=2, sticky='w')
 
         self.enter_ListPriceMod = ttk.Entry(self, width =15)
         self.enter_ListPriceMod.grid(row = 3, column=1, pady=5, sticky='e')
         label_ListPriceMod = tk.Label(self, text="List Price Mod ", bg='white')
-        label_ListPriceMod.grid(row = 3, column=0, pady=2, sticky='w')
+        label_ListPriceMod.grid(row = 3, column=0, padx=1, pady=2, sticky='w')
 
         submitCustomer = ttk.Button(self, text = "Add customer to DB", style='Accent.TButton', command = lambda: self.insertCustomer()) 
-        submitCustomer.grid(row=4, column=0, columnspan=2, pady=2, sticky='we')
+        submitCustomer.grid(row=4, column=0, columnspan=2, padx=1, pady=2, sticky='we')
 
         '''3. Update Customer'''
         self.updateCustomer
@@ -88,15 +92,15 @@ class AdminPageGui(tk.Frame):
         self.delCustomer
 
         deleteCustomerTitle = tk.Label(self, text="Delete Customer", font=LARGE_FONT, bg='white')
-        deleteCustomerTitle.grid(row=6, column=0, columnspan=2, pady=10, sticky='sw')
+        deleteCustomerTitle.grid(row=6, column=0, columnspan=2, padx=1, pady=10, sticky='sw')
 
         self.delete_customerNumber = ttk.Entry(self, width =20) 
         self.delete_customerNumber.grid(row = 7, column=1, pady=2,sticky='se')
         label_deleteCustomerNumber = tk.Label(self, text="Customer Number ", bg='white')
-        label_deleteCustomerNumber.grid(row = 7, column=0, pady=2, sticky='sw')
+        label_deleteCustomerNumber.grid(row = 7, column=0, padx=1, pady=2, sticky='sw')
 
         submitDeleteCustomer = ttk.Button(self, text = "Delete customer",  style='Accent.TButton', command = lambda: self.delCustomer())
-        submitDeleteCustomer.grid(row=8, column=0, columnspan=2, pady=2, sticky='nwe')
+        submitDeleteCustomer.grid(row=8, column=0, columnspan=2, padx=1, pady=2, sticky='nwe')
 
 
     ''' 5. CLASS Methods '''
