@@ -1,6 +1,5 @@
 import tkinter as tk
 from tkinter import ttk
-#from db import CustomerBuilder
 from db import CustomerBuilder
  
 LARGE_FONT= ("Verdana", 12)
@@ -33,10 +32,7 @@ class AdminPageGui(tk.Frame):
         self.status = ''
         status = tk.Label(self, text = "Status: " + self.status, font=MEDIUM_FONT, bg='#e3feff' )
         status.grid(row=6, column = 3, sticky='w', pady=10)
-        #self.T = tk.Text(self, height = 8, width=30, bg='#f2f2f2')
-        #self.T.grid(row = 6, column = 3, columnspan=1, pady=10, sticky="n")
-        #self.T.insert(tk.END, "Status:")
-
+      
         self.updateStatusText
         self.clearEntry
         
@@ -61,7 +57,7 @@ class AdminPageGui(tk.Frame):
         label_ListPriceMod = tk.Label(self, text="List Price Mod ", bg='white')
         label_ListPriceMod.grid(row = 3, column=0, pady=2, sticky='w')
 
-        submitCustomer = ttk.Button(self, text = "Add customer to DB", command = lambda: self.insertCustomer()) 
+        submitCustomer = ttk.Button(self, text = "Add customer to DB", style='Accent.TButton', command = lambda: self.insertCustomer()) 
         submitCustomer.grid(row=4, column=0, columnspan=2, pady=2, sticky='we')
 
         '''3. Update Customer'''
@@ -85,7 +81,7 @@ class AdminPageGui(tk.Frame):
         label_updateListPriceMod = tk.Label(self, text="List Price Mod", bg='white')
         label_updateListPriceMod.grid(row = 3, column=3, pady=2, sticky='w')
 
-        submitUpdateCustomer = ttk.Button(self, text = "Update customer", command = lambda: self.updateCustomer())
+        submitUpdateCustomer = ttk.Button(self, text = "Update customer",  style='Accent.TButton', command = lambda: self.updateCustomer())
         submitUpdateCustomer.grid(row=4, column=3, columnspan=2, pady=2, sticky='we')
 
         '''4. Delete Customer'''
@@ -99,7 +95,7 @@ class AdminPageGui(tk.Frame):
         label_deleteCustomerNumber = tk.Label(self, text="Customer Number ", bg='white')
         label_deleteCustomerNumber.grid(row = 7, column=0, pady=2, sticky='sw')
 
-        submitDeleteCustomer = ttk.Button(self, text = "Delete customer", command = lambda: self.delCustomer())
+        submitDeleteCustomer = ttk.Button(self, text = "Delete customer",  style='Accent.TButton', command = lambda: self.delCustomer())
         submitDeleteCustomer.grid(row=8, column=0, columnspan=2, pady=2, sticky='nwe')
 
 

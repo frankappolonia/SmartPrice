@@ -1,6 +1,6 @@
 import tkinter as tk
-from tkinter import ttk
-from tkinter.constants import BOTTOM, TOP, TRUE 
+from tkinter import Widget, ttk
+from tkinter.constants import TOP
 import UI
 
 '''This file contains the class for the main GUI. This is where the main TK frame is built
@@ -11,6 +11,7 @@ every page. For instance, if a user selects the admin page, the gui page specs
 will be loaded in the BaseFrame class.'''
 
 LARGE_FONT= ("Futura", 15)
+
 class BaseFrame(tk.Tk):
 
 
@@ -18,7 +19,7 @@ class BaseFrame(tk.Tk):
         
         tk.Tk.__init__(self, *args, **kwargs)
 
-        container = tk.Frame(self, width=500, height=500, bg="#fa6e6e")
+        container = tk.Frame(self, width=500, height=500, bg="#f7f5f5")
         container.pack( fill=None, expand = False)
       
         container.grid_rowconfigure(0, weight=10)
@@ -30,7 +31,7 @@ class BaseFrame(tk.Tk):
             self.frames[F] = frame
             frame.grid(row=1, column=2, sticky="nsew")
        
-        backButton = ttk.Button(container, width=5, text="Back", command = lambda: self.show_frame(StartPage))
+        backButton = ttk.Button(container, width=5, style='Accent.TButton', text="Back", command = lambda: self.show_frame(StartPage))
         backButton.grid(row=0, column=1, sticky = "w")
 
         self.show_frame(StartPage)
@@ -50,30 +51,22 @@ class StartPage(tk.Frame):
         self.frames = {}
         tk.Widget.configure(self, background='white')
 
-       
+
         self.img = tk.PhotoImage(file="Banner_clear_2_5.png")
         self.panel = tk.Label(self, image=self.img)
-        #self.panel.grid(row=1, column=1, columnspan=5, sticky="ew")
         self.panel.pack(side=TOP)
 
-        self.style = ttk.Style()
-        self.style.theme_use('vista')
-        self.style.configure('TButton', background='#63b0ff',foreground = 'black', borderwidth=1, focusthickness=15)
-
-        path = "C:\\Users\\appolofr\\Documents\GitHub\SmartPrice\\roundedButton.png"
-    
+        #self.style = ttk.Style()
+        #self.style.configure('TButton', background='#63b0ff',foreground = 'black', borderwidth=1, focusthickness=15)
+            
         welcomeLabel = tk.Label(self, text="Welcome to ABE SmartPrice!", font=LARGE_FONT, pady=50, bg='white')
-        #welcomeLabel.grid(row=2, column=0, columnspan=4, sticky="nsew")
         welcomeLabel.pack(side=TOP)
 
         adminPage = ttk.Button(self,  text = "Admin (Add, Update, Delete Customer)", command = lambda: controller.show_frame(PasswordPage))
-        #adminPage.grid(row=3, column=0, columnspan=4, sticky = "nswe", pady=15)
         adminPage.pack(side=TOP)
 
         pricingPage = ttk.Button(self, text = "Get Parts Pricing", command = lambda: controller.show_frame(UI.PricingPageGUI))
-        #pricingPage.grid(row=4, column=0, columnspan=4, sticky="nsew", pady=15)
         pricingPage.pack(side=TOP, pady=20)
-
 
 class PasswordPage(tk.Frame):
     '''This class builds the password prompt page to access the admin page.
@@ -111,7 +104,21 @@ class PasswordPage(tk.Frame):
                 controller.show_frame(UI.AdminPageGui)
                 
         
+        
 app = BaseFrame()
+
+def change_theme():
+    '''Calling this function sets the third party theme for the application.'''
+    #style = ttk.Style(app)
+    app.tk.call('source', 'C:\\Users\\appolofr\\Documents\\GitHub\\SmartPrice\\Third Party\\Theme_SunValley\\sun-valley.tcl')
+    app.tk.call('set_theme', 'light')
+
+    # NOTE: The theme's real name is azure-<mode>
+    if app.tk.call("ttk::style", "theme", "use") == "sun-valley-light":
+        # Set light theme
+        app.tk.call("set_theme", "light")
+
+change_theme()
 app.resizable(width=False, height=False)
 app.mainloop()
 

@@ -85,7 +85,7 @@ class PricingPageGUI(tk.Frame):
         self.check_truckDown = ttk.Checkbutton(self, width = 15, text="Truck Down", variable=self.truckdownControl)
         self.check_truckDown.grid(row = 8, column=2, pady=5, sticky= tk.W )
 
-        calculatePriceBt = ttk.Button(self, text = "Calculate Pricing", command = lambda:[self.calculatePricing()])
+        calculatePriceBt = ttk.Button(self, text = "Calculate Pricing",  style='Accent.TButton', command = lambda:[self.calculatePricing()])
         calculatePriceBt.grid(row=9, column=0, columnspan=3, pady=2)
 
         ''' 4. Display customer info '''
@@ -97,7 +97,7 @@ class PricingPageGUI(tk.Frame):
         label_customerNumber2 = tk.Label(self, text="Customer Number", bg="white")
         label_customerNumber2.grid(row=1, column=3, pady=2, sticky= "nw")
 
-        displayInfo = ttk.Button(self, text = "Display Levels", command = lambda:[self.getPriceLevels(), self.clearEntry()])
+        displayInfo = ttk.Button(self, text = "Display Levels",  style='Accent.TButton', command = lambda:[self.getPriceLevels(), self.clearEntry()])
         displayInfo.grid(row=2, column=3, columnspan=3, pady=2)
 
         self.customerT = tk.Text(self, height = 4, width=3)
