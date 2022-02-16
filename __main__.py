@@ -64,7 +64,6 @@ class StartPage(tk.Frame):
         self.panel = tk.Label(self, image=self.img)
         self.panel.pack(side=TOP)
 
-        
         welcomeLabel = tk.Label(self, text="Welcome to ABE SmartPrice!", font=LARGE_FONT, pady=50, bg='white')
         welcomeLabel.pack(side=TOP)
 

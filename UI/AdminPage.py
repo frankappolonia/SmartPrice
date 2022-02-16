@@ -138,19 +138,16 @@ class AdminPageGui(tk.Frame):
              input -> goes to customerValues.
              
              Called with tk button'''
-        
-        # Checks if the accountnumber entry and listprice entry are integers
-        accountNumFlag = self.enter_customerNumber.get().isdigit()
-        listPriceFlag = self.enter_ListPriceMod.get().isdigit()
+        try:
+            accountNum = (int(self.enter_customerNumber.get()))
+            listPriceMod = (float(self.enter_ListPriceMod.get()))
 
-        if accountNumFlag and listPriceFlag: # execute insert customer 
-            customerValues = [self.enter_customerNumber.get(), self.enter_customerName.get(), self.enter_ListPriceMod.get()]
+            customerValues = [accountNum, self.enter_customerName.get(), listPriceMod]
             CustomerBuilder.createCustomer(customerValues)
             self.updateStatusText("customer {0} ({1}) added to DB.".format(self.enter_customerNumber.get(), self.enter_customerName.get()))
             self.clearEntry()
-
-        else: #catch for invalid input
-            self.updateStatusText("Invalid input. Account number \n and list price mod must be integers!")
+        except:
+            self.updateStatusText("Invalid input. Account number \n must be an int and list price mod must be a float!")
             self.clearEntry()
 
     def updateCustomer(self):

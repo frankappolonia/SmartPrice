@@ -1,6 +1,5 @@
 import tkinter as tk
 from tkinter import IntVar, ttk
-from tkinter.constants import Y
 from db import dbFunctions
 from .UniversalModifiers import Mods
 
